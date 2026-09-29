@@ -2,6 +2,7 @@
 
 import { Resend } from "resend";
 
+// Fetch API key securely from environment variables
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export interface FormState {
@@ -27,12 +28,9 @@ export async function sendEmail(
 
   try {
     const { data, error } = await resend.emails.send({
-      // Sending FROM Resend's onboarding system prevents Bluehost's spoof filter
       from: "Minhas Brothers Inquiry <info@minhasbrothers.com>",
-      // Delivering TO your official domain email
       to: ["info@minhasbrothers.com"],
       subject: `New Export Inquiry from ${name} (${company || "N/A"})`,
-      // Clicking "Reply" in your webmail will send your response directly to the customer
       replyTo: email,
       html: `
         <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
